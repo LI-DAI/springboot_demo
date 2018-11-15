@@ -20,8 +20,9 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
-    @GetMapping("/getUser/{id}")
+    @GetMapping("/{id}")
     public User getUserById(@PathVariable String id){
+        System.out.println("进入controller");
         return userService.getUserById(id);
     }
 }
