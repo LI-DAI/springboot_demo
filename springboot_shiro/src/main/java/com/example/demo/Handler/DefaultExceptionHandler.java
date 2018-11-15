@@ -18,7 +18,7 @@ public class DefaultExceptionHandler {
 
     /**
      * 无权限异常
-     * @param e
+     * @param e 异常信息
      * @return
      */
     @ExceptionHandler(value= AuthorizationException.class)
