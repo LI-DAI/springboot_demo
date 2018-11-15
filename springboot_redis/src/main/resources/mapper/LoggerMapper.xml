@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lidai.study.dao.LoggerMapper">
+    <resultMap id="logger" type="com.lidai.study.Entity.LoggerEntity">
+        <id  column="id" property="id"/>
+        <id  column="client_ip" property="clientIp"/>
+        <id  column="uri" property="uri"/>
+        <id  column="type" property="type"/>
+        <id  column="method" property="method"/>
+        <id  column="param_data" property="paramData"/>
+        <id  column="session_id" property="sessionId"/>
+        <id  column="time" property="time"/>
+        <id  column="return_time" property="returnTime"/>
+        <id  column="return_data" property="returnData"/>
+        <id  column="http_status_code" property="httpStatusCode"/>
+        <id  column="time_consuming" property="timeConsuming"/>
+    </resultMap>
+
+</mapper>

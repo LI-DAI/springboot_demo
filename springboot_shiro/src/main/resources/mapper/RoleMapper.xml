@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.RoleMapper">
+    <resultMap id="role" type="com.example.demo.entity.Role">
+        <id property="roleId" column="role_id" />
+        <result property=" roleName" column="role_name " />
+        <result property=" remark" column=" remark" />
+        <result property=" deleteFlag" column=" delete_flag" />
+        <result property=" createBy" column=" create_by" />
+        <result property=" createTime" column=" create_time" />
+        <result property=" updateBy" column=" update_by" />
+        <result property=" updateTime" column=" update_time" />
+        <collection property="menus" column="role_id"
+                    ofType="com.example.demo.entity.Menu"
+                    select="com.example.demo.dao.MenuMapper.getMenusByRoleId" />
+    </resultMap>
+
+    <resultMap id="roleMenu" type="com.example.demo.entity.RoleMenu">
+        <id property="roleId" column="role_id" />
+        <id property="menuId" column="menu_id" />
+    </resultMap>
+
+    <sql id="BaseColumns" >
+        role_id,role_name,remark,delete_flag,create_by,create_time,update_by,update_time
+    </sql>
+
+    <select id="getRolesByUserId" parameterType="java.lang.String" resultMap="role">
+        SELECT r.* FROM sys_role r LEFT JOIN sys_user_role ur ON r.role_id=ur.role_id WHERE ur.user_id=#{userId} AND r.delete_flag='N'
+    </select>
+
+    <select id="getAllRoles" resultMap="role">
+        SELECT
+        <include refid="BaseColumns" />
+        FROM sys_role
+        WHERE delete_flag='N'
+        <if test="roleName!=null and roleName!=''">
+            AND role_name LIKE CONCAT('%',#{roleName},'%')
+        </if>
+        <if test="remark!=null and remark!=''">
+            AND remark LIKE CONCAT('%',#{remark},'%')
+        </if>
+    </select>
+</mapper>

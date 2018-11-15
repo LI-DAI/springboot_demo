@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.UserMapper">
+    <resultMap id="user" type="com.example.demo.entity.User">
+        <id property="userId" column="user_id" />
+        <result property=" username" column="username " />
+        <result property=" password" column=" password" />
+        <result property=" salt" column=" salt" />
+        <result property=" email" column=" email" />
+        <result property=" phoneNumber" column=" phonenumber" />
+        <result property=" sex" column=" sex" />
+        <result property=" deleteFlag" column=" delete_flag" />
+        <result property=" createBy" column=" create_by" />
+        <result property=" createTime" column=" create_time" />
+        <result property=" updateBy" column=" update_by" />
+        <result property=" updateTime" column=" update_time" />
+        <collection property="roles"  column="user_id"
+                    ofType="com.example.demo.entity.Role" select="com.example.demo.dao.RoleMapper.getRolesByUserId" />
+    </resultMap>
+
+    <resultMap id="userRole" type="com.example.demo.entity.UserRole">
+        <id property="userId" column="user_id" />
+        <id property="roleId" column="role_id" />
+    </resultMap>
+
+    <sql id="BaseColumns">
+      user_id,username,password,salt,email,phonenumber,sex,delete_flag,create_by,create_time,update_by,update_time
+    </sql>
+
+    <update id="updateUser" parameterType="com.example.demo.entity.User">
+        UPDATE sys_user
+        <set>
+            <if test="username!=null and username!=''">username=#{username},</if>
+            <if test="password!=null and password!=''">password=#{password},</if>
+            <if test="email !=null and email!=''">email=#{email},</if>
+            <if test="phoneNumber!=null and phoneNumber!=''">phonenumber=#{phoneNumber},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+            <if test="updateBy!=null and updateBy!=''">update_by=#{updateBy},</if>
+            update_time=now()
+        </set>
+        WHERE user_id=#{userId}
+    </update>
+
+    <update id="deleteUserByIds" parameterType="java.util.List">
+        update sys_user SET delete_flag='Y',update_time=now() WHERE user_id IN
+        <foreach collection="list" item="userId" open="(" close=")" separator=",">
+            #{userId}
+        </foreach>
+    </update>
+
+    <insert id="insertUser" parameterType="com.example.demo.entity.User">
+       INSERT INTO sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId!=null and userId!=''">user_id,</if>
+            <if test="username!=null and username!=''">username,</if>
+            <if test="password!=null and password!=''">password,</if>
+            <if test="salt!=null and salt!=''">salt,</if>
+            <if test="email !=null and email!=''">email,</if>
+            <if test="phoneNumber!=null and phoneNumber!=''">phonenumber,</if>
+            <if test="sex!=null">sex,</if>
+            <if test="deleteFlag!=null">delete_flag,</if>
+            <if test="createBy!=null and createBy !=''">create_by,</if>
+            create_time,
+            <if test="updateBy!=null and updateBy!=''">update_by,</if>
+            <if test="updateTime!=null">update_time,</if>
+        </trim>
+        <trim prefix="value(" suffix=")" suffixOverrides=",">
+            <if test="userId!=null and userId!=''">#{userId},</if>
+            <if test="username!=null and username!=''">#{username},</if>
+            <if test="password!=null and password!=''">#{password},</if>
+            <if test="salt!=null and salt!=''">#{salt},</if>
+            <if test="email !=null and email!=''">#{email},</if>
+            <if test="phoneNumber!=null and phoneNumber!=''">#{phoneNumber},</if>
+            <if test="sex!=null">#{sex},</if>
+            <if test="deleteFlag!=null">#{deleteFlag},</if>
+            <if test="createBy!=null and createBy !=''">#{createBy},</if>
+            now(),
+            <if test="updateBy!=null and updateBy!=''">#{updateBy},</if>
+            <if test="updateTime!=null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <select id="getUserById" parameterType="java.lang.String" resultMap="user">
+        SELECT
+        <include refid="BaseColumns" />
+        FROM sys_user WHERE delete_flag='N' AND user_id=#{userId}
+    </select>
+
+    <select id="getUserByUsername" resultMap="user">
+        SELECT
+        <include refid="BaseColumns" />
+        FROM sys_user
+        WHERE delete_flag='N' AND username=#{username}
+    </select>
+
+    <select id="getAllUser" resultMap="user">
+        SELECT
+        <include refid="BaseColumns" />
+        FROM sys_user
+        WHERE delete_flag='N'
+        <if test="username!=null and username!=''">
+            AND username LIKE CONCAT('%', #{username}, '%')
+        </if>
+        <if test="email!=null and email!=''">
+            AND email LIKE CONCAT('%',#{email},'%')
+        </if>
+        <if test="phoneNumber!=null and phoneNumber!=''">
+            AND phonenumber LIKE CONCAT('%',#{phoneNumber},'%')
+        </if>
+    </select>
+
+    <insert id="insertUserRoles" >
+        INSERT INTO sys_user_role(user_id,role_id) VALUES
+        <foreach collection="list" item="item"  separator=",">
+            (#{item.userId},#{item.roleId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteUserRolesByUserIds" parameterType="java.util.List">
+        DELETE FROM sys_user_role WHERE  user_id in
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.MenuMapper">
+    <resultMap id="menu" type="com.example.demo.entity.Menu">
+        <id property="menuId" column="menu_id" />
+        <result property=" menuName" column="menu_name " />
+        <result property=" parentId" column=" parent_id" />
+        <result property=" url" column=" url" />
+        <result property=" MenuType" column=" menu_type" />
+        <result property=" perms" column=" perms" />
+        <result property=" createBy" column=" create_by" />
+        <result property=" createTime" column=" create_time" />
+        <result property=" updateBy" column=" update_by" />
+        <result property=" updateTime" column=" update_time" />
+    </resultMap>
+
+    <select id="getMenusByRoleId" resultMap="menu">
+        SELECT m.* FROM sys_menu m LEFT JOIN sys_role_menu rm ON m.menu_id=rm.menu_id WHERE rm.role_id = #{roleId}
+    </select>
+
+    <select id="getMenusByUserId" resultMap="menu" parameterType="java.lang.String">
+        SELECT DISTINCT m.* FROM sys_menu m
+          LEFT JOIN sys_role_menu  rm ON m.menu_id=rm.menu_id
+          LEFT JOIN sys_role r on rm.role_id = r.role_id
+          LEFT JOIN sys_user_role  ur ON r.role_id= ur.role_id
+        WHERE ur.user_id=#{userId} AND r.delete_flag='N'
+    </select>
+
+    <select id="getAllMenus" resultMap="menu" >
+        SELECT * FROM sys_menu ORDER BY menu_id ASC
+    </select>
+</mapper>
