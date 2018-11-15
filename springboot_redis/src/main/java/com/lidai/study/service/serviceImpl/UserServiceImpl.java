@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -20,17 +21,23 @@ import java.util.UUID;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class UserServcieImpl implements UserService{
+public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserMapper userMapper;
 
     //redis中键值为user1
-    @Cacheable("user1")
+//    @Cacheable("user1")   //测试拦截需要关闭缓存
+    @Override
     public User getUserById(String id){
         User user = userMapper.getUserById(id);
-        System.out.println("若下面没出现“无缓存的时候调用”字样且能打印出数据表示测试成功");
+        System.out.println("-----------------无缓存，走数据库--------------------"+user.toString());
         return user;
+    }
+
+    @Override
+    public List<User> getAll() {
+        return null;
     }
 
     public String getSessionId(HttpSession session){

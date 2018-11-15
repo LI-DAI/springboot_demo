@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -22,6 +23,6 @@ public interface UserService {
 
     User getUserById(String id);
 
-
+    List<User> getAll();
 }
 

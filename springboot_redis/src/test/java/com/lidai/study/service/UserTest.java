@@ -4,6 +4,7 @@
 package com.lidai.study.service;
 
 import com.lidai.study.Entity.User;
+import com.lidai.study.service.serviceImpl.UserServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class UserTest {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Test
     public void test1(){

@@ -38,7 +38,7 @@ public class RedisTest {
 
     @Test
     public void test2() throws InterruptedException {
-        User user=new User("lidai","123456");
+        User user=new User("111","lidai","123456");
         ValueOperations<String,User> operations=redisTemplate.opsForValue();
         operations.set("com.test",user);
         operations.set("com.test.fff",user,1, TimeUnit.SECONDS);//设置过期时间1秒

@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class DefaultExceptionHandler {
 
+    /**
+     * 无权限异常
+     * @param e
+     * @return
+     */
     @ExceptionHandler(value= AuthorizationException.class)
     public Result AuthorizationExceptionHandler(Exception e){
         return Result.build().fail("无权限访问："+e.getMessage());

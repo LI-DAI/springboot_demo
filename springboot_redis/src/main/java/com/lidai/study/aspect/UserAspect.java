@@ -3,11 +3,12 @@
  */
 package com.lidai.study.aspect;
 
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import com.lidai.study.Entity.User;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 /**
  * @author lidai
@@ -16,17 +17,26 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class UserAspect {
-    @Pointcut("execution(* com.lidai.study.service.serviceImpl.UserServcieImpl.*(..))")
-    public void getUserById(){}
+//    @Pointcut("execution(* com.lidai.study.service.serviceImpl.UserServcieImpl.*(..))")
+//    public void getUserById(){}
+//
+//    @Before("getUserById()")
+//    public void before(){
+//        System.out.println("即将开始拦截处理");
+//    }
+//
+//    @After("getUserById()")
+//    public void after(){
+//        System.out.println("拦截处理结束");
+//    }
 
-    @Before("getUserById()")
-    public void before(){
-        System.out.println("即将开会，准备一下");
-    }
-
-    @After("getUserById()")
-    public void after(){
-        System.out.println("会议结束，收拾椅子");
+    @Around("execution(* com.lidai.study.service.serviceImpl.UserServiceImpl.*(..))")
+    public Object userAspectTest(ProceedingJoinPoint point) throws Throwable {
+        Long startTime=new Date().getTime();
+        System.out.println("即将开始拦截处理，拦截时间为："+startTime);
+        Object object =point.proceed();
+        System.out.println("拦截处理结束，耗时时间为："+(new Date().getTime()-startTime));
+        return object;
     }
 }
 
