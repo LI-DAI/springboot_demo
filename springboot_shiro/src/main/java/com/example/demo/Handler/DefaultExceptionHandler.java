@@ -1,7 +1,7 @@
 /*
  * Copyright (C), 2013-2018, 天津大海云科技有限公司
  */
-package com.example.demo.Handler;
+package com.example.demo.handler;
 
 import com.example.demo.entity.Result;
 import org.apache.shiro.authz.AuthorizationException;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * @author lidai
  * @date 2018/11/15 11:40
+ * 全局异常处理
  */
 @RestControllerAdvice
 public class DefaultExceptionHandler {
