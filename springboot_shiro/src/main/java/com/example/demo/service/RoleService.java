@@ -5,6 +5,7 @@ package com.example.demo.service;
 
 import com.example.demo.dao.RoleMapper;
 import com.example.demo.entity.Role;
+import com.example.demo.entity.RoleMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,10 @@ public class RoleService {
 
     public List<Role> getAllRoles(String roleName,String remark){
         return roleMapper.getAllRoles(roleName,remark);
+    }
+
+    public int batchInsertRoleMenu(List<RoleMenu> roleMenus){
+       return roleMapper.batchInsertRoleMenu(roleMenus);
     }
 }
 

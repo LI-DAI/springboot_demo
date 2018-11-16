@@ -40,4 +40,11 @@
             AND remark LIKE CONCAT('%',#{remark},'%')
         </if>
     </select>
+
+    <insert id="batchInsertRoleMenu" >
+        INSERT INTO sys_role_menu(role_id,menu_id) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.roleId},#{item.menuId})
+        </foreach>
+    </insert>
 </mapper>

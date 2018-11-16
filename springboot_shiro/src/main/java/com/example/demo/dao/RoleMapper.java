@@ -4,6 +4,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.entity.Role;
+import com.example.demo.entity.RoleMenu;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,5 +20,7 @@ public interface RoleMapper {
     List<Role> getRolesByUserId(String userId);
 
     List<Role> getAllRoles(@Param("roleName")String roleName,@Param("remark")String remark);
+
+    int batchInsertRoleMenu(List<RoleMenu> roleMenus);
 }
 
