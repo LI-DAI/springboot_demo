@@ -6,7 +6,7 @@
         <result property=" menuName" column="menu_name " />
         <result property=" parentId" column=" parent_id" />
         <result property=" url" column=" url" />
-        <result property=" MenuType" column=" menu_type" />
+        <result property=" menuType" column=" menu_type" />
         <result property=" perms" column=" perms" />
         <result property=" createBy" column=" create_by" />
         <result property=" createTime" column=" create_time" />

@@ -50,7 +50,7 @@ public class UserService {
         }
         user.setUserId(UUIDUtils.getUUID());
         user.randomSalt();
-        user.setCreateBy(ShiroUtils.getUser().getUsername());
+//        user.setCreateBy(ShiroUtils.getUser().getUsername());
         PasswordHelper.encryptPassword(user);
         return userMapper.insertUser(user);
     }
