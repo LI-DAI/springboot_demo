@@ -32,5 +32,7 @@ public interface UserMapper {
     int insertUserRoles(List<UserRole> list);
 
     int deleteUserRolesByUserIds(String[] ids);
+
+    int batchInsert(List<User> users);
 }
 

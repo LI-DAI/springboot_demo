@@ -3,16 +3,22 @@
  */
 package com.example.demo.service;
 
+import com.example.demo.dao.UserMapper;
 import com.example.demo.entity.User;
+import com.example.demo.enums.DeleteStatus;
+import com.example.demo.enums.Sex;
 import com.example.demo.utils.JwtHelper;
+import com.example.demo.utils.UUIDUtils;
 import com.github.pagehelper.PageHelper;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -28,6 +34,9 @@ import java.util.stream.Stream;
 @RunWith(SpringRunner.class)
 @Slf4j
 public class test {
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Test
     public void test1(){
@@ -66,6 +75,23 @@ public class test {
         System.out.println(username);
     }
 
+    @Test
+    public void testInsertUser(){
 
+        List<User> users  =  new ArrayList<>();
+        for (int i=0;i<120000;i++){
+            User user = new User();
+            user.setUserId(UUIDUtils.getUUID());
+            user.setUsername("testBigData--"+i);
+            user.setPassword("123456");
+            user.randomSalt();
+            user.setPhoneNumber("1111111111"+i);
+            user.setEmail("123@qq.com");
+            user.setSex(Sex.MALE);
+            user.setDeleteFlag(DeleteStatus.N);
+            users.add(user);
+        }
+        userMapper.batchInsert(users);
+    }
 }
 

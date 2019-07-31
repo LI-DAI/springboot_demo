@@ -122,4 +122,11 @@
             #{item}
         </foreach>
     </delete>
+
+    <insert id="batchInsert">
+        INSERT INTO sys_user (user_id,username,password,salt,email,phonenumber,sex,delete_flag,create_by,create_time,update_by,update_time) VALUES
+        <foreach collection="list"  item="item" separator=",">
+            (#{item.userId},#{item.username},#{item.password},#{item.salt},#{item.email},#{item.phoneNumber},#{item.sex},#{item.deleteFlag},'admin',now(),'amdin',now())
+        </foreach>
+    </insert>
 </mapper>
