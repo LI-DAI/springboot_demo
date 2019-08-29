@@ -10,9 +10,9 @@
         <result property=" createTime" column=" create_time" />
         <result property=" updateBy" column=" update_by" />
         <result property=" updateTime" column=" update_time" />
-        <collection property="menus" column="role_id"
-                    ofType="com.example.demo.entity.Menu"
-                    select="com.example.demo.dao.MenuMapper.getMenusByRoleId" />
+        <!--<collection property="menus" column="role_id"-->
+                    <!--ofType="com.example.demo.entity.Menu"-->
+                    <!--select="com.example.demo.dao.MenuMapper.getMenusByRoleId" />-->
     </resultMap>
 
     <resultMap id="roleMenu" type="com.example.demo.entity.RoleMenu">

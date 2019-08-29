@@ -9,7 +9,7 @@ import java.util.Arrays;
  * @author lidai
  * @date 2019/6/18 16:48
  */
-public class Test_1 {
+public class Test_3 {
     /**
      * 首先 要明白对象和常量的存储情况
      *

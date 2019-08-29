@@ -3,16 +3,24 @@
  */
 package com.example.demo.regex;
 
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author lidai
  * @date 2019/6/6 15:23
  */
+@SuppressWarnings("all")
 public class RegexDemo_2 {
 
     public static void main(String[] args) {
         test_1();
         test_2();
         test_3();
+        test_4();
+        test_5();
+        test_6();
     }
 
     /**
@@ -44,6 +52,42 @@ public class RegexDemo_2 {
         String regex = "\\d{3}";
         System.out.println(str.matches(regex));
     }
+
+    /**
+     * 为了可以让规则得结果被宠用，正则引入了组，可以将规则封装成一个组用()表示，组得出现都由编号，默认从1开始
+     * 想要以有得组可以使用 \n（n是组得编号）获取
+     */
+    public static void test_4(){
+        String str = "fsdjxxxuiroyyjflsuerzzjkhkjh";
+        String regex = "(.)\\1+";
+        System.out.println(Arrays.toString(str.split(regex)));
+    }
+
+    /**
+     * 将叠词替换为单个字符 zzzz->z
+     * $n(n为组的编号) 获取组的结果
+     */
+    public static void test_5(){
+        String str = "fsdjxxxxxxxxxxxxuiroyyyyyyyyyyjflsuerzzzzzzzzzzzzzjkhkjh";
+        String regex = "(.)\\1+";
+        String newStr = str.replaceAll(regex,"$1");
+        System.out.println(newStr);
+    }
+
+    /**
+     * 去除符合规则的字符串
+     */
+    public static void test_6(){
+        String str = "fsdjxxxxxxxxxxxxuiroyyyyyyyyyyjflsuerzzzzzzzzzzzzzjkhkjh";
+        String regex = "(.)\\1+";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher  = pattern.matcher(str);
+        while(matcher.find()){
+            System.out.println(matcher.group());
+        }
+    }
+
+
 
 
 }

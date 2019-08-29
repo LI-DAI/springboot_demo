@@ -8,8 +8,9 @@ import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,21 +32,22 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
-    public User getUserById(@RequestParam("userId") String userId) {
+    @GetMapping("/{userId}")
+    @Cacheable(value = {"user"}, key = "#userId")
+    public User getUserById(@PathVariable String userId) {
         return userService.getUserById(userId);
     }
 
     @PostMapping("/add")
-//    @RequiresPermissions("user:create")
+    @RequiresPermissions("user:create")
     public int insertUser(@RequestBody User user) {
         return userService.insertUser(user);
     }
 
     @GetMapping("/all")
     @RequiresPermissions("user:get")
-    public PageInfo<User> getAllUser(@RequestParam(value = "pageNum ", defaultValue = "1") int pageNum,
-                                     @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+    public PageInfo<User> getAllUser(@RequestParam(value = "pageNum ",defaultValue = "1")int  pageNum,
+                                     @RequestParam(value = "pageSize",defaultValue = "10")int pageSize,
                                      @RequestParam("username") String username,
                                      @RequestParam("email") String email,
                                      @RequestParam("phoneNumber") String phoneNumber) {

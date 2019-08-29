@@ -7,6 +7,7 @@ import com.example.demo.enums.DeleteStatus;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  */
 @Data
 @ToString
-public class Role {
+public class Role implements Serializable {
     private String roleId;
     private String roleName;
     private String remark;

@@ -62,13 +62,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .successHandler(new AuthenticationSuccessHandler() {
+                .successHandler(/*new AuthenticationSuccessHandler() {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
                         httpServletResponse.setContentType("application/json;charset=utf-8");
                         httpServletResponse.getWriter().write("登录成功");
                     }
-                })
+                }*/
+                        (httpServletRequest, httpServletResponse, authentication) -> {
+                            httpServletResponse.setContentType("application/json;charset=utf-8");
+                            httpServletResponse.getWriter().write("登录成功");
+                        }
+                )
                 .failureHandler(new AuthenticationFailureHandler() {
                     @Override
                     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {

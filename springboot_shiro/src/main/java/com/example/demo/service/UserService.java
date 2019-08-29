@@ -3,20 +3,18 @@
  */
 package com.example.demo.service;
 
-import com.example.demo.entity.Result;
 import com.example.demo.entity.UserRole;
-import com.example.demo.shiro.ShiroUtils;
 import com.example.demo.dao.UserMapper;
 import com.example.demo.entity.User;
 import com.example.demo.utils.ExcelUtils;
 import com.example.demo.utils.PasswordHelper;
+import com.example.demo.utils.ShiroUtils;
 import com.example.demo.utils.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -106,6 +104,7 @@ public class UserService {
     public int deleteUserRolesByUserIds(String[] ids){
         return userMapper.deleteUserRolesByUserIds(ids);
     }
+
 
     public void exportExcel(){
         List<User> users=getAllUser(null,null,null);

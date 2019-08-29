@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * @author lidai
@@ -21,20 +22,33 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> getAllUser(){
+    public List<User> getAllUser() {
         return userRepository.findAll();
     }
 
-    public void insertUser(User user){
+    public void insertUser(User user) {
         userRepository.save(user);
     }
 
-    public Optional<User> getOne(String id){
+    /**
+     * 根据id获取user
+     *
+     * @param id
+     * @return
+     */
+    public Optional<User> findById(String id) {
         return userRepository.findById(id);
     }
 
-    public User findByUsername(String username){
+    /**
+     * 根据用户名获取user
+     *
+     * @param username
+     * @return
+     */
+    public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
 }
 

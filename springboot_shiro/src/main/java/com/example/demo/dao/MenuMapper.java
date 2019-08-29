@@ -15,6 +15,14 @@ import java.util.List;
 @Mapper
 public interface MenuMapper {
 
+    /**
+     * 获取用户权限
+     *
+     * @author lidai
+     * @date 2019/7/26 10:15
+     * @param userId
+     * @return java.util.List<com.example.demo.entity.Menu>
+     */
     List<Menu> getMenusByUserId(String userId);
 
     List<Menu> getMenusByRoleId(String roleId);

@@ -3,7 +3,6 @@
  */
 package com.example.demo.entity;
 
-import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -13,13 +12,13 @@ import java.util.Set;
  * @author lidai
  * @date 2018/10/23 13:53
  */
-@Entity
+@Entity//告诉JPA这是一个实体类
 //@Data
-@Table(name = "t_user")
+@Table(name = "t_user")//和@entity配合使用映射表结构。可以省略，如果省略，则默认为表名小写
 @ToString
 public class User {
 
-    @Id
+    @Id//标注主键
     @GeneratedValue
     private String userId;
 
@@ -27,10 +26,10 @@ public class User {
 
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "t_user_role",
-            joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "role_id",referencedColumnName = "roleId"))
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private Set<Role> roleSet;
 
     public String getUserId() {

@@ -14,8 +14,8 @@
         <result property=" createTime" column=" create_time" />
         <result property=" updateBy" column=" update_by" />
         <result property=" updateTime" column=" update_time" />
-        <collection property="roles"  column="user_id"
-                    ofType="com.example.demo.entity.Role" select="com.example.demo.dao.RoleMapper.getRolesByUserId" />
+        <!--<collection property="roles"  column="user_id"-->
+                    <!--ofType="com.example.demo.entity.Role" select="com.example.demo.dao.RoleMapper.getRolesByUserId" />-->
     </resultMap>
 
     <resultMap id="userRole" type="com.example.demo.entity.UserRole">

@@ -2,12 +2,14 @@ package com.example.demo.entity;
 
 import com.example.demo.enums.ResultStatus;
 
+import java.io.Serializable;
+
 /**
  * @author lidai
  * @date 2018/10/30 15:45
  * 统一响应对象
  */
-public class Result {
+public class Result implements Serializable {
 
     /**
      * 请求状态码
@@ -28,10 +30,12 @@ public class Result {
      *
      * @see Result#build()
      */
-    private Result() {}
+    private Result() {
+    }
 
     /**
      * 构造Result对象
+     *
      * @return Result对象
      */
     public static Result build() {
@@ -40,6 +44,7 @@ public class Result {
 
     /**
      * 接口请求成功
+     *
      * @return {@link Result}
      */
     public Result success() {
@@ -59,10 +64,11 @@ public class Result {
 
     /**
      * 所有成功的响应可以通过这个方法返回
-     * @param code      请求失败状态码，具体参考{@link ResultStatus}
-     * @param msg       请求失败提示信息
-     * @param result    请求失败返回给前端的信息，一般情况下这个值为null或其他空对象
-     * @return          {@link Result}
+     *
+     * @param code   请求失败状态码，具体参考{@link ResultStatus}
+     * @param msg    请求失败提示信息
+     * @param result 请求失败返回给前端的信息，一般情况下这个值为null或其他空对象
+     * @return {@link Result}
      */
     public Result success(int code, String msg, Object result) {
         this.code = code;
@@ -73,6 +79,7 @@ public class Result {
 
     /**
      * 接口请求失败
+     *
      * @return {@link Result}
      */
     public Result fail() {
@@ -92,10 +99,11 @@ public class Result {
 
     /**
      * 所有失败的响应可以通过这个方法返回
-     * @param code      请求失败状态码，具体参考{@link ResultStatus}
-     * @param msg       请求失败提示信息
-     * @param result    请求失败返回给前端的信息，一般情况下这个值为null或其他空对象
-     * @return          {@link Result}
+     *
+     * @param code   请求失败状态码，具体参考{@link ResultStatus}
+     * @param msg    请求失败提示信息
+     * @param result 请求失败返回给前端的信息，一般情况下这个值为null或其他空对象
+     * @return {@link Result}
      */
     public Result fail(int code, String msg, Object result) {
         this.code = code;
@@ -106,7 +114,8 @@ public class Result {
 
     /**
      * 用户未登录
-     * @return  {@link Result}
+     *
+     * @return {@link Result}
      */
     public Result unauthenticated() {
         return unauthenticated(null);
@@ -125,7 +134,8 @@ public class Result {
 
     /**
      * 用户权限不足
-     * @return  {@link Result}
+     *
+     * @return {@link Result}
      */
     public Result unauthorized() {
         return unauthorized(null);
@@ -144,7 +154,8 @@ public class Result {
 
     /**
      * 用户不存在
-     * @return  {@link Result}
+     *
+     * @return {@link Result}
      */
     public Result userNotExist() {
         return userNotExist(null);
@@ -163,7 +174,8 @@ public class Result {
 
     /**
      * 用户登录失败
-     * @return  {@link Result}
+     *
+     * @return {@link Result}
      */
     public Result loginFailed() {
         return loginFailed(null);
@@ -182,7 +194,8 @@ public class Result {
 
     /**
      * 无效的Token
-     * @return  {@link Result}
+     *
+     * @return {@link Result}
      */
     public Result invalidToken() {
         return invalidToken(null);

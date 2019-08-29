@@ -33,7 +33,7 @@ public class Account {
     public static void main(String[] args) {
         Account a = new Account();
 
-        new Thread(()->a.set("小明",1000d)).start();
+        new Thread(() -> a.set("小明", 1000d)).start();
 
         try {
             TimeUnit.SECONDS.sleep(1);
