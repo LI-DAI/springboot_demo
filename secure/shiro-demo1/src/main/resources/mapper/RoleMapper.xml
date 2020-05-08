@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ld.shiro.dao.RoleMapper">
+    <resultMap id="role" type="com.ld.shiro.entity.manage.Role">
+
+
+        <result column="role_id" property="roleId"/>
+        <result column="role_name" property="roleName"/>
+        <result column="remark" property="remark"/>
+        <result column="delete_flag" property="deleteFlag"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <collection property="menus" column="role_id"
+                    ofType="com.ld.shiro.entity.manage.Menu"
+                    select="com.ld.shiro.dao.MenuMapper.getMenusByRoleId" />
+    </resultMap>
+
+    <resultMap id="roleMenu" type="com.ld.shiro.entity.manage.RoleMenu">
+        <id property="roleId" column="role_id" />
+        <id property="menuId" column="menu_id" />
+    </resultMap>
+
+    <sql id="BaseColumns" >
+        role_id,role_name,remark,delete_flag,create_by,create_time,update_by,update_time
+    </sql>
+
+    <select id="getRolesByUserId" parameterType="java.lang.String" resultMap="role">
+        SELECT r.* FROM sys_role r LEFT JOIN sys_user_role ur ON r.role_id=ur.role_id WHERE ur.user_id=#{userId} AND r.delete_flag='N'
+    </select>
+
+    <select id="getAllRoles" resultMap="role">
+        SELECT
+        <include refid="BaseColumns" />
+        FROM sys_role
+        WHERE delete_flag='N'
+        <if test="roleName!=null and roleName!=''">
+            AND role_name LIKE CONCAT('%',#{roleName},'%')
+        </if>
+        <if test="remark!=null and remark!=''">
+            AND remark LIKE CONCAT('%',#{remark},'%')
+        </if>
+    </select>
+
+    <insert id="batchInsertRoleMenu" >
+        INSERT INTO sys_role_menu(role_id,menu_id) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.roleId},#{item.menuId})
+        </foreach>
+    </insert>
+</mapper>

@@ -1,0 +1,65 @@
+spring:
+  application:
+    name: shiro-demo1
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://localhost:3306/springboot_shiro?characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.jdbc.Driver
+      filters: stat,wall
+      maxActive: 20
+      initialSize: 5
+      maxWait: 60000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 20
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+      use-global-data-source-stat: true
+  redis:
+    database: 0
+    port: 6379
+    host: 127.0.0.1
+    imeout: 5000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 1
+mybatis:
+  mapper-locations: classpath*:/mapper/*.xml
+  type-aliases-package: com.ld.bmsys.auth.api.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+security:
+  custom:
+    url:
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /swagger/**
+      - /**/v2/api-docs
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /webjars/springfox-swagger-ui/**
+      - /druid/**
+      - /login
+      - /user/register
+      - /auth/login
+      - /user/hello
+    header: Token
+    token-validity-in-hours: 2
+    online-key: online-token

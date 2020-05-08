@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ld.shiro.dao.MenuMapper">
+    <resultMap id="menu" type="com.ld.shiro.entity.manage.Menu">
+        <result column="menu_id" property="menuId"/>
+        <result column="menu_name" property="menuName"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="url" property="url"/>
+        <result column="perms" property="perms"/>
+        <result column="menu_type" property="menuType"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="getMenusByRoleId" resultMap="menu">
+        SELECT m.* FROM sys_menu m LEFT JOIN sys_role_menu rm ON m.menu_id=rm.menu_id WHERE rm.role_id = #{roleId}
+    </select>
+
+    <select id="getMenusByUserId" resultMap="menu" parameterType="java.lang.String">
+        SELECT DISTINCT m.* FROM sys_menu m
+          LEFT JOIN sys_role_menu  rm ON m.menu_id=rm.menu_id
+          LEFT JOIN sys_role r on rm.role_id = r.role_id
+          LEFT JOIN sys_user_role  ur ON r.role_id= ur.role_id
+        WHERE ur.user_id=#{userId} AND r.delete_flag='N'
+    </select>
+
+    <select id="getAllMenus" resultMap="menu" >
+        SELECT * FROM sys_menu ORDER BY menu_id ASC
+    </select>
+</mapper>
